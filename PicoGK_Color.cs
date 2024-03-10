@@ -33,6 +33,7 @@
 // limitations under the License.   
 //
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace PicoGK
@@ -172,13 +173,13 @@ namespace PicoGK
         /// Return a random color
         /// </summary>
         /// <returns>Random color</returns>
-        public static ColorFloat clrRandom(Random? oRand = null)
+        public static ColorFloat clrRandom(Random oRand = null)
         {
             Random oRandom = oRand ?? new Random();
 
-            return new ColorFloat(  oRandom.NextSingle(),
-                                    oRandom.NextSingle(),
-                                    oRandom.NextSingle());
+            return new ColorFloat(  oRandom.Next(),
+                                    oRandom.Next(),
+                                    oRandom.Next());
         }
     }
 

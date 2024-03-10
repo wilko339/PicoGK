@@ -33,10 +33,13 @@
 // limitations under the License.   
 //
 
+using System;
+using System.Threading;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.IO;
 
 namespace PicoGK
 {
@@ -109,165 +112,165 @@ namespace PicoGK
         /// library cannot be found, folders, etc. cannot be created, etc.
         /// Always handle the exception to understand what's going on.
         /// </exception>
-        public static void Go(  float _fVoxelSizeMM,
-                                ThreadStart fnTask,
-                                string strLogFolder     = "",
-                                string strLogFileName   = "",
-                                string strSrcFolder     = "",
-                                string strLightsFile    = "")
-        {
-            Debug.Assert(_fVoxelSizeMM > 0.0f);
-            fVoxelSizeMM = _fVoxelSizeMM;
+        //public static void Go(  float _fVoxelSizeMM,
+        //                        ThreadStart fnTask,
+        //                        string strLogFolder     = "",
+        //                        string strLogFileName   = "",
+        //                        string strSrcFolder     = "",
+        //                        string strLightsFile    = "")
+        //{
+        //    Debug.Assert(_fVoxelSizeMM > 0.0f);
+        //    fVoxelSizeMM = _fVoxelSizeMM;
 
-            TestAssumptions();
+        //    TestAssumptions();
 
-            if (strLogFolder == "")
-                strLogFolder = Utils.strDocumentsFolder();
+        //    if (strLogFolder == "")
+        //        strLogFolder = Utils.strDocumentsFolder();
 
-            if (strLogFileName == "")
-                strLogFileName = "PicoGK.log";
+        //    if (strLogFileName == "")
+        //        strLogFileName = "PicoGK.log";
 
-           string strLog = Path.Combine(    strLogFolder,
-                                            strLogFileName);
+        //   string strLog = Path.Combine(    strLogFolder,
+        //                                    strLogFileName);
 
-            using (LogFile oLog = new LogFile(strLog))
-            {
+        //    using (LogFile oLog = new LogFile(strLog))
+        //    {
 
-                lock (oMtxLog)
-                {
-                    if (oTheLog is not null)
-                        throw new Exception("You cannot call PicoGK.Library.Go() more than once per app (1)");
+        //        lock (oMtxLog)
+        //        {
+        //            if (oTheLog != null)
+        //                throw new Exception("You cannot call PicoGK.Library.Go() more than once per app (1)");
 
-                    if (oTheViewer is not null)
-                        throw new Exception("You cannot call PicoGK.Library.Go() more than once per app (2)");
-                    oTheLog = oLog;
+        //            if (oTheViewer != null)
+        //                throw new Exception("You cannot call PicoGK.Library.Go() more than once per app (2)");
+        //            oTheLog = oLog;
 
-                    Library.strLogFolder = strLogFolder;
-                    Library.strSrcFolder = strSrcFolder;
-                }
+        //            Library.strLogFolder = strLogFolder;
+        //            Library.strSrcFolder = strSrcFolder;
+        //        }
 
-                Log("Welcome to PicoGK");
+        //        Log("Welcome to PicoGK");
 
-                try
-                {
-                    // Create a config using physical coordinates
-                    _Init(fVoxelSizeMM);
-                    // Done creating C++ Library
-                }
+        //        try
+        //        {
+        //            // Create a config using physical coordinates
+        //            _Init(fVoxelSizeMM);
+        //            // Done creating C++ Library
+        //        }
 
-                catch (Exception e)
-                {
-                    Log($"-----------------------------------------");
-                    Log($"-- Could not initialize PicoGK Library --");
-                    Log($"-----------------------------------------");
-                    Log($"Most likely cause is that the PicoGK runtime library wasn't found");
-                    Log($"Make sure {Config.strPicoGKLib}.dylib/.dll is accessible and has execution rights.");
-                    Log($"See PicoGK documentation on GitHub for troubleshooting info");
-                    Log($"Terribly long error string follows (usually devoid of real information):");
-                    Log($"--------------------------------");
-                    Log($"-");
-                    Log($"{e}\n");
-                    Log($"-");
-                    Log($"--------------------------------");
-                    throw new Exception("Failed to load PicoGK Library");
-                }
+        //        catch (Exception e)
+        //        {
+        //            Log($"-----------------------------------------");
+        //            Log($"-- Could not initialize PicoGK Library --");
+        //            Log($"-----------------------------------------");
+        //            Log($"Most likely cause is that the PicoGK runtime library wasn't found");
+        //            Log($"Make sure {Config.strPicoGKLib}.dylib/.dll is accessible and has execution rights.");
+        //            Log($"See PicoGK documentation on GitHub for troubleshooting info");
+        //            Log($"Terribly long error string follows (usually devoid of real information):");
+        //            Log($"--------------------------------");
+        //            Log($"-");
+        //            Log($"{e}\n");
+        //            Log($"-");
+        //            Log($"--------------------------------");
+        //            throw new Exception("Failed to load PicoGK Library");
+        //        }
 
-                if (strLightsFile == "")
-                {
-                    string strSearched = "";
+        //        if (strLightsFile == "")
+        //        {
+        //            string strSearched = "";
 
-                    strLightsFile = Path.Combine(Utils.strPicoGKSourceCodeFolder(), "ViewerEnvironment/PicoGKDefaultEnv.zip");
+        //            strLightsFile = Path.Combine(Utils.strPicoGKSourceCodeFolder(), "ViewerEnvironment/PicoGKDefaultEnv.zip");
 
-                    if (!File.Exists(strLightsFile))
-                    {
-                        strSearched += strLightsFile + "\n";
+        //            if (!File.Exists(strLightsFile))
+        //            {
+        //                strSearched += strLightsFile + "\n";
 
-                        if (strSrcFolder == "")
-                        {
-                            strLightsFile = Path.Combine(Utils.strDocumentsFolder(), "PicoGKDefaultEnv.zip");
-                        }
-                        else
-                        {
-                            strLightsFile = Path.Combine(strSrcFolder, "PicoGKDefaultEnv.zip");
-                        }
+        //                if (strSrcFolder == "")
+        //                {
+        //                    strLightsFile = Path.Combine(Utils.strDocumentsFolder(), "PicoGKDefaultEnv.zip");
+        //                }
+        //                else
+        //                {
+        //                    strLightsFile = Path.Combine(strSrcFolder, "PicoGKDefaultEnv.zip");
+        //                }
 
-                        if (!File.Exists(strLightsFile))
-                        {
-                            strSearched += strLightsFile + "\n";
+        //                if (!File.Exists(strLightsFile))
+        //                {
+        //                    strSearched += strLightsFile + "\n";
 
-                            strLightsFile = Path.Combine(Utils.strExecutableFolder(), "ViewerEnvironment.zip");
+        //                    strLightsFile = Path.Combine(Utils.strExecutableFolder(), "ViewerEnvironment.zip");
 
-                            if (!File.Exists(strLightsFile))
-                            {
-                                strSearched += strLightsFile + "\n";
+        //                    if (!File.Exists(strLightsFile))
+        //                    {
+        //                        strSearched += strLightsFile + "\n";
 
-                                Log($"Could not find a lights file - your viewer will look quite dark.");
-                                Log($"Searched in:");
-                                Log($"{strSearched}");
-                                Log("You can fix this by placing the file PicoGKLights.zip into one of these folders");
-                                Log("or providing the file as a parameter at Library.Go()");
-                            }
-                        }
-                    }
-                }
+        //                        Log($"Could not find a lights file - your viewer will look quite dark.");
+        //                        Log($"Searched in:");
+        //                        Log($"{strSearched}");
+        //                        Log("You can fix this by placing the file PicoGKLights.zip into one of these folders");
+        //                        Log("or providing the file as a parameter at Library.Go()");
+        //                    }
+        //                }
+        //            }
+        //        }
 
-                Log("Creating Viewer");
+        //        Log("Creating Viewer");
 
-                Viewer? oViewer = null;
+        //        Viewer oViewer = null;
 
-                try
-                {
-                    oViewer = new Viewer("PicoGK", new Vector2(2048f, 1024f));
-                }
+        //        try
+        //        {
+        //            oViewer = new Viewer("PicoGK", new Vector2(2048f, 1024f));
+        //        }
 
-                catch (Exception e)
-                {
-                    Log("Failed to create viewer");
-                    Log(e.ToString());
+        //        catch (Exception e)
+        //        {
+        //            Log("Failed to create viewer");
+        //            Log(e.ToString());
 
-                    throw new Exception("Failed to create all necessary objects");
-                }
+        //            throw new Exception("Failed to create all necessary objects");
+        //        }
 
-                using (oViewer)
-                {
-                    if (!bSetup())
-                    {
-                        Log("!! Failed to initialize !!");
-                        return;
-                    }
+        //        using (oViewer)
+        //        {
+        //            if (!bSetup())
+        //            {
+        //                Log("!! Failed to initialize !!");
+        //                return;
+        //            }
 
-                    try
-                    {
-                        oViewer.LoadLightSetup(strLightsFile);
-                        oViewer.SetBackgroundColor("FF");
-                    }
+        //            try
+        //            {
+        //                oViewer.LoadLightSetup(strLightsFile);
+        //                oViewer.SetBackgroundColor("FF");
+        //            }
 
-                    catch (Exception e)
-                    {
-                        Log($"Failed to load Light Setup - your viewer will look dark\n{e.Message}");
-                    }
+        //            catch (Exception e)
+        //            {
+        //                Log($"Failed to load Light Setup - your viewer will look dark\n{e.Message}");
+        //            }
                     
 
-                    lock (oMtxViewer)
-                    {
-                        oTheViewer = oViewer;
-                    }
+        //            lock (oMtxViewer)
+        //            {
+        //                oTheViewer = oViewer;
+        //            }
 
-                    Thread oThread = new Thread(fnTask);
+        //            Thread oThread = new Thread(fnTask);
 
-                    Log("Starting tasks.\n");
-                    oThread.Start();
+        //            Log("Starting tasks.\n");
+        //            oThread.Start();
 
-                    while (oViewer.bPoll())
-                    {
-                        Thread.Sleep(5); // 200 Hz is plenty
-                    }
+        //            while (oViewer.bPoll())
+        //            {
+        //                Thread.Sleep(5); // 200 Hz is plenty
+        //            }
 
-                    m_bAppExit = true;
-                    Log("Viewer Window Closed");
-                }
-            }
-        }
+        //            m_bAppExit = true;
+        //            Log("Viewer Window Closed");
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Checks whether the task started using Go() should continue, and returns true if that's the case or false otherwise.
@@ -351,14 +354,14 @@ namespace PicoGK
             // so should be compatible with our own
             // structs, but let's be sure
 
-            Vector3     vec3    = new();
-            Vector2     vec2    = new();
-            Matrix4x4   mat4    = new();
-            Coord       xyz     = new(0, 0, 0);
-            Triangle    tri     = new(0, 0, 0);
-            ColorFloat  clr     = new(0f);
-            BBox2       oBB2    = new();
-            BBox3       oBB3    = new();
+            Vector3     vec3    = new Vector3();
+            Vector2     vec2    = new Vector2();
+            Matrix4x4   mat4    = new Matrix4x4();
+            Coord       xyz     = new Coord(0, 0, 0);
+            Triangle    tri     = new Triangle(0, 0, 0);
+            ColorFloat  clr     = new ColorFloat(0f);
+            BBox2       oBB2    = new BBox2();
+            BBox3       oBB3    = new BBox3();
 
             Debug.Assert(sizeof(bool)           == 1);                  // 8 bit for bool assumed
             Debug.Assert(Marshal.SizeOf(vec3)   == ((32 * 3) / 8));     // 3 x 32 bit float
@@ -403,12 +406,12 @@ namespace PicoGK
 
             try
             {
-                Lattice     lat     = new();
-                Voxels      vox     = new();
-                Mesh        msh     = new();
-                Voxels      voxM    = new(msh);
-                Voxels      voxL    = new(lat);
-                PolyLine    oPoly   = new("FF0000");
+                Lattice     lat     = new Lattice();
+                Voxels      vox     = new Voxels();
+                Mesh        msh     = new Mesh();
+                Voxels      voxM    = new Voxels(msh);
+                Voxels      voxL    = new Voxels(lat);
+                PolyLine    oPoly   = new PolyLine("FF0000");
             }
 
             catch (Exception e)
@@ -426,7 +429,7 @@ namespace PicoGK
 
         private static object   oMtxLog     = new object();
         private static object   oMtxViewer  = new object();
-        private static LogFile? oTheLog     = null;
-        private static Viewer?  oTheViewer  = null;
+        private static LogFile oTheLog     = null;
+        private static Viewer  oTheViewer  = null;
     }
 }

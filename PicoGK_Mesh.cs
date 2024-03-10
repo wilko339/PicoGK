@@ -33,6 +33,7 @@
 // limitations under the License.   
 //
 
+using System;
 using System.Diagnostics;
 using System.Numerics;
 
@@ -106,7 +107,7 @@ namespace PicoGK
         /// <param name="nVertex">The vertex index</param>
         public Vector3 vecVertexAt(int nVertex)
         {
-            Vector3 vec = new ();
+            Vector3 vec = new Vector3();
             _GetVertex(m_hThis, nVertex, ref vec);
             return vec;
         }
@@ -176,7 +177,7 @@ namespace PicoGK
         /// <param name="nTriangle">Triangle index in the mesh</param>
         public Triangle oTriangleAt(int nTriangle)
         {
-            Triangle t = new();
+            Triangle t = new Triangle();
             _GetTriangle(   m_hThis,
                             nTriangle,
                             ref t);
@@ -196,9 +197,9 @@ namespace PicoGK
                                     out Vector3 vecB,
                                     out Vector3 vecC)
         {
-            vecA = new();
-            vecB = new();
-            vecC = new();
+            vecA = new Vector3();
+            vecB = new Vector3();
+            vecC = new Vector3();
 
             _GetTriangleV(  m_hThis,
                             nTriangle,

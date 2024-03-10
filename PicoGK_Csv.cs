@@ -33,6 +33,9 @@
 // limitations under the License.   
 //
 
+using System.Collections.Generic;
+using System.IO;
+
 namespace PicoGK
 {
     public class CsvTable

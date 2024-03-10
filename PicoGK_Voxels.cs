@@ -33,6 +33,7 @@
 // limitations under the License.   
 //
 
+using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -54,7 +55,7 @@ namespace PicoGK
         /// Negative values indicate the inside of the object
         /// Positive values indicate the outside of the object
         /// </returns>
-        public abstract float fSignedDistance(in Vector3 vec);
+        float fSignedDistance(in Vector3 vec);
     }
 
     public partial class Voxels
@@ -258,7 +259,7 @@ namespace PicoGK
         public void CalculateProperties(    out float fVolumeCubicMM,
                                             out BBox3 oBBox)
         {
-            oBBox = new();
+            oBBox = new BBox3();
            _CalculateProperties(m_hThis, out fVolumeCubicMM, ref oBBox);
         }
 
@@ -288,7 +289,7 @@ namespace PicoGK
         public bool bClosestPointOnSurface( in  Vector3 vecSearch,
                                             out Vector3 vecSurfacePoint)
         {
-            vecSurfacePoint     = new();
+            vecSurfacePoint     = new Vector3();
             return _bClosestPointOnSurface( m_hThis,
                                             in  vecSearch,
                                             ref vecSurfacePoint);
@@ -306,7 +307,7 @@ namespace PicoGK
                                         in  Vector3 vecDirection,
                                         out Vector3 vecSurfacePoint)
         {
-            vecSurfacePoint     = new();
+            vecSurfacePoint     = new Vector3();
             return _bRayCastToSurface( m_hThis,
                                        in  vecSearch,
                                        in  vecDirection,
@@ -340,19 +341,19 @@ namespace PicoGK
         /// </summary>
         /// <param name="nZSlice">Slice to retrieve. 0 is at the bottom.</param>
         /// <param name="img">Pre-allocated grayscale image to receive the values</param>
-        public void GetVoxelSlice(  in int nZSlice,
-                                    ref ImageGrayScale img)
-        {
-            GCHandle oPinnedArray = GCHandle.Alloc(img.m_afValues, GCHandleType.Pinned);
-            try
-            {
-                IntPtr afBufferPtr = oPinnedArray.AddrOfPinnedObject();
-                _GetVoxelSlice(m_hThis, nZSlice, afBufferPtr);
-            }
-            finally
-            {
-                oPinnedArray.Free();
-            }
-        }
+        //public void GetVoxelSlice(  in int nZSlice,
+        //                            ref ImageGrayScale img)
+        //{
+        //    GCHandle oPinnedArray = GCHandle.Alloc(img.m_afValues, GCHandleType.Pinned);
+        //    try
+        //    {
+        //        IntPtr afBufferPtr = oPinnedArray.AddrOfPinnedObject();
+        //        _GetVoxelSlice(m_hThis, nZSlice, afBufferPtr);
+        //    }
+        //    finally
+        //    {
+        //        oPinnedArray.Free();
+        //    }
+        //}
     }
 }

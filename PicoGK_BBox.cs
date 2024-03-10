@@ -33,6 +33,7 @@
 // limitations under the License.   
 //
 
+using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -48,14 +49,14 @@ namespace PicoGK
         /// <summary>
         /// Creates an empty Bounding Box
         /// </summary>
-        public BBox2()
-        {
-            vecMin.X = float.MaxValue;
-            vecMin.Y = float.MaxValue;
+        //public BBox2()
+        //{
+        //    vecMin.X = float.MaxValue;
+        //    vecMin.Y = float.MaxValue;
 
-            vecMax.X = float.MinValue;
-            vecMax.Y = float.MinValue;
-        }
+        //    vecMax.X = float.MinValue;
+        //    vecMax.Y = float.MinValue;
+        //}
 
         public BBox2(   float fMinX,
                         float fMinY,
@@ -188,16 +189,16 @@ namespace PicoGK
         /// <summary>
         /// Create an empty Bounding Box
         /// </summary>
-        public BBox3()
-        {
-            vecMin.X = float.MaxValue;
-            vecMin.Y = float.MaxValue;
-            vecMin.Z = float.MaxValue;
+        //public BBox3()
+        //{
+        //    vecMin.X = float.MaxValue;
+        //    vecMin.Y = float.MaxValue;
+        //    vecMin.Z = float.MaxValue;
 
-            vecMax.X = float.MinValue;
-            vecMax.Y = float.MinValue;
-            vecMax.Z = float.MinValue;
-        }
+        //    vecMax.X = float.MinValue;
+        //    vecMax.Y = float.MinValue;
+        //    vecMax.Z = float.MinValue;
+        //}
 
         public BBox3(   float fMinX,
                         float fMinY,
@@ -378,9 +379,9 @@ namespace PicoGK
         /// <returns>A random vector inside of this Bounding Box</returns>
         public Vector3 vecRandomVectorInside(ref Random oRand)
         {
-            return new Vector3( oRand.NextSingle() * vecSize().X + vecMin.X,
-                                oRand.NextSingle() * vecSize().Y + vecMin.Y,
-                                oRand.NextSingle() * vecSize().Z + vecMin.Z);
+            return new Vector3( oRand.Next() * vecSize().X + vecMin.X,
+                                oRand.Next() * vecSize().Y + vecMin.Y,
+                                oRand.Next() * vecSize().Z + vecMin.Z);
         }
 
         /// <summary>
@@ -389,7 +390,7 @@ namespace PicoGK
         /// <returns>A 2D Bounding Box with the X/Y extent of this Bounding Box</returns>
         public BBox2 oAsBoundingBox2()
         {
-            BBox2 oBB2 = new();
+            BBox2 oBB2 = new BBox2();
             oBB2.Include(new Vector2(vecMin.X, vecMin.Y));
             oBB2.Include(new Vector2(vecMax.X, vecMax.Y));
             return oBB2;

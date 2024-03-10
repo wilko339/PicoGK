@@ -33,8 +33,12 @@
 // limitations under the License.   
 //
 
+using System;
+using System.IO;
+using System.Threading;
 using System.Numerics;
 using System.Diagnostics;
+using MathFloat;
 
 namespace PicoGK
 {
@@ -65,7 +69,7 @@ namespace PicoGK
         /// <returns></returns>true if file exists, false if timeout
         static public bool bWaitForFileExistence(string strFile, float fTimeOut=1000000f)
         {
-            Stopwatch oWatch = new();
+            Stopwatch oWatch = new Stopwatch();
             oWatch.Start();
             long lTimeout = oWatch.ElapsedMilliseconds + (long) (fTimeOut * 1000);
 
@@ -87,7 +91,7 @@ namespace PicoGK
         /// <exception cref="Exception">Excepts, if not found</exception>
         static public string strHomeFolder()
         {
-            string? str = null;
+            string str = null;
 
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
@@ -113,7 +117,7 @@ namespace PicoGK
         /// <exception cref="Exception">Excepts, if unable to find</exception>
         static public string strDocumentsFolder()
         {
-            string? str = null;
+            string str = null;
 
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
@@ -200,7 +204,7 @@ namespace PicoGK
             // in their infinite wisdom, the coders of C# decided to
             // throw an exception, if str is shorter than iMaxCharacters
             // that's why this function is even necessary
-            return str[..iMaxCharacters];
+            return str.Substring(0, iMaxCharacters);
         }
 
         static public void SetMatrixRow(    ref Matrix4x4 mat, uint n,
@@ -242,7 +246,7 @@ namespace PicoGK
         static public Matrix4x4 matLookAt(  Vector3 vecEye,
                                             Vector3 vecLookAt)
         {
-            Vector3 vecZ = new(0.0f, 0.0f, 1.0f);
+            Vector3 vecZ = new Vector3(0.0f, 0.0f, 1.0f);
 
             Vector3 vecView = Vector3.Normalize(vecEye - vecLookAt);
             Vector3 vecRight = Vector3.Normalize(Vector3.Cross(vecZ, vecView));
@@ -332,11 +336,11 @@ namespace PicoGK
                 //P ≈ π [ 3 (a + b) - √[(3a + b) (a + 3b) ]]
                 //P ≈ π(a + b) [ 1 + (3h) / (10 + √(4 - 3h) ) ], where h = (a - b)2/(a + b)2
 
-                float fP    = float.Pi * (3.0f * (fVoxA + fVoxB)
-                                - float.Sqrt((3.0f * fVoxA + fVoxB)
+                float fP    = (float)Math.PI * (3.0f * (fVoxA + fVoxB)
+                                - MathF.Sqrt((3.0f * fVoxA + fVoxB)
                                 * (fVoxA + 3.0f * fVoxB)));
 
-                iSides      = 2 * (int) float.Ceiling(fP);
+                iSides      = 2 * (int) MathF.Ceiling(fP);
             }
 
             if (iSides < 3)
@@ -354,7 +358,7 @@ namespace PicoGK
             Vector3 vecPrevTop      = vecPrevBottom;
             vecPrevTop.Z           += vecS.Z;
 
-            float fStep             = MathF.PI * 2.0f / iSides;
+            float fStep             = (float)Math.PI * 2.0f / iSides;
 
             for (int i = 1; i <= iSides; ++i)
             {
@@ -396,8 +400,8 @@ namespace PicoGK
                 float fVoxA = fA / Library.fVoxelSizeMM;
                 float fVoxB = fB / Library.fVoxelSizeMM;
 
-                float fP =  float.Pi * (3.0f * (fVoxA + fVoxB)
-                            - float.Sqrt((3.0f * fVoxA + fVoxB)
+                float fP =  (float)Math.PI * (3.0f * (fVoxA + fVoxB)
+                            - MathF.Sqrt((3.0f * fVoxA + fVoxB)
                             * (fVoxA + 3.0f * fVoxB)));
 
                 iSides = 2 * (int)MathF.Ceiling(fP);
@@ -416,7 +420,7 @@ namespace PicoGK
             vecTop.Z               += vecS.Z;
             Vector3 vecPrevBottom   = new Vector3(fA, 0, 0) + vecBottomCenter;
 
-            float fStep = MathF.PI * 2.0f / iSides;
+            float fStep = (float)Math.PI * 2.0f / iSides;
 
             for (int i = 1; i <= iSides; ++i)
             {
@@ -472,7 +476,7 @@ namespace PicoGK
 
         static float fApproxEllipsoidSurfaceArea(Vector3 vecABC)
         {
-            return 4.0f * MathF.PI * MathF.Pow((
+            return 4.0f * (float)Math.PI * MathF.Pow((
                 MathF.Pow(vecABC.X * vecABC.Y, 1.6f) +
                 MathF.Pow(vecABC.Y * vecABC.Z, 1.6f) +
                 MathF.Pow(vecABC.Z * vecABC.X, 1.6f)) / 3.0f, 1.0f / 1.6f);
@@ -490,7 +494,7 @@ namespace PicoGK
             Vector3 vecRadii    = vecS * 0.5f;
             Vector3 vecRadii2   = vecRadii * vecRadii;
 
-            float fCoeff        = fSquared(2.0f * MathF.Sin(MathF.PI * 0.2f));
+            float fCoeff        = fSquared(2.0f * MathF.Sin((float)Math.PI * 0.2f));
             Vector3 vecPenta    = new Vector3(
                 (2.0f * MathF.Sqrt(fCoeff * vecRadii2.X - vecRadii2.X)) / fCoeff,
                 (2.0f * MathF.Sqrt(fCoeff * vecRadii2.Y - vecRadii2.Y)) / fCoeff,
@@ -502,7 +506,7 @@ namespace PicoGK
 
             for (int i = 0; i < 5; i++)
             {
-                float fAngle = 0.4f * MathF.PI * i;
+                float fAngle = 0.4f * (float)Math.PI * i;
                 avecPOffs[i] = new Vector3(vecPenta.X * MathF.Cos(fAngle), vecPenta.Y * MathF.Sin(fAngle), fPentaDZ);
             }
 
