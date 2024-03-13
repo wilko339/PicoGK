@@ -1,5 +1,8 @@
 ![PicoGK](Documentation/images/PicoGK.jpg)
 
+# Edited for PicoGH
+This is a fork from the original PicoGK library. This version has been modified for C# 7.3 for compatibility with Grasshopper.
+
 # Welcome to PicoGK
 
 PicoGK ("peacock") is a compact, robust, and fast geometry kernel for Computational Engineering. 
