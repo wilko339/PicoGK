@@ -176,7 +176,7 @@ namespace PicoGK
                 }
 
                 if (oMesh.nTriangleCount() == 0)
-                    throw new Exception("Imported STL mesh is empty (zero triangles), failed to load");
+                    throw new Exception("Imported STL _rmesh is empty (zero triangles), failed to load");
 
                 return oMesh;
             }

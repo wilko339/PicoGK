@@ -45,6 +45,10 @@ namespace PicoGK
 {
     public partial class Library
     {
+        public static void SetVoxelSize(float voxelSize)
+        {
+            _Init(voxelSize);
+        }
         /// <summary>
         /// Returns the library name (from the C++ side)
         /// </summary>
