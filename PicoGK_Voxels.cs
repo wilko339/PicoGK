@@ -99,7 +99,7 @@ namespace PicoGK
         }
 
         /// <summary>
-        /// Creates a new voxel field form a mesh
+        /// Creates a new voxel field from a mesh
         /// </summary>
         /// <param name="msh">The mesh that is rendered into the voxels</param>
         public Voxels(in Mesh msh) : this()

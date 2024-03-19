@@ -47,6 +47,7 @@ namespace PicoGK
     {
         public static void SetVoxelSize(float voxelSize)
         {
+            fVoxelSizeMM = voxelSize;
             _Init(voxelSize);
         }
         /// <summary>
