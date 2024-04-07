@@ -49,7 +49,7 @@ namespace PicoGK
         /// </summary>
         /// <param name="strPath"></param>Path that is potentially quoted
         /// <returns></returns>Unquoted path
-        static string strStripQuotesFromPath(string strPath)
+        static public string strStripQuotesFromPath(string strPath)
         {
             if (strPath.StartsWith("\"") && strPath.EndsWith("\""))
             {
@@ -144,6 +144,26 @@ namespace PicoGK
         }
 
         /// <summary>
+        /// Returns the path to the source folder of your project, under the
+        /// assumption that the executable .NET DLL is in its usual place.
+        /// 
+        /// This function is can be used to load files in a subdirectory
+        /// of your source code, such as the viewer environment or fonts.
+        /// </summary>
+        /// <returns>The assumed path to the source code root</returns>
+        static public string strProjectRootFolder()
+        {
+            string strPath = strStripQuotesFromPath(Environment.CommandLine);
+
+            for (int n = 0; n < 4; n++)
+            {
+                strPath = Path.GetDirectoryName(strPath) ?? "";
+            }
+
+            return strPath;
+        }
+
+        /// <summary>
         /// Returns the path to the source folder of PicoGK, making the following
         /// Assumptions:
         /// - PicoGK is contained in a subfolder named "PicoGK" inside your
@@ -155,16 +175,7 @@ namespace PicoGK
         /// <returns>The assumed path to the PicoGK source code</returns>
         static public string strPicoGKSourceCodeFolder()
         {
-            string strPath = strStripQuotesFromPath(Environment.CommandLine);
-
-            for (int n = 0; n < 4; n++)
-            {
-                strPath = Path.GetDirectoryName(strPath) ?? "";
-            }
-
-            strPath = Path.Combine(strPath, "PicoGK");
-
-            return strPath;     
+            return Path.Combine(strProjectRootFolder(), "PicoGK");
         }
 
         /// <summary>
