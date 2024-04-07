@@ -40,20 +40,22 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace PicoGK
 {
     public partial class Library
     {
-        /// <summary>
-        /// Set the global voxel size for any PicoGH / PicoGK operation
-        /// </summary>
-        /// <param name="voxelSize"></param>
-        public static void SetVoxelSize(float voxelSize)
+        public static void InitLibrary(float voxelSize, float meshAdaptivity, bool triangulateMeshes, uint meshCoarseningFactor)
         {
             fVoxelSizeMM = voxelSize;
-            _Init(voxelSize);
+            fMeshAdaptivity = meshAdaptivity;
+            bTriangulateMeshes = triangulateMeshes;
+            iMeshCoarseningFactor = meshCoarseningFactor;
+
+            _Init(voxelSize, triangulateMeshes, meshAdaptivity);
         }
+
 
         /// <summary>
         /// Set a coarsening factor for the intermediate meshes.
@@ -167,6 +169,7 @@ namespace PicoGK
             Matrix4x4   mat4    = new Matrix4x4();
             Coord       xyz     = new Coord(0, 0, 0);
             Triangle    tri     = new Triangle(0, 0, 0);
+            Quad        quad    = new Quad(0, 0, 0, 0);
             ColorFloat  clr     = new ColorFloat(0f);
             BBox2       oBB2    = new BBox2();
             BBox3       oBB3    = new BBox3();
@@ -177,6 +180,7 @@ namespace PicoGK
             Debug.Assert(Marshal.SizeOf(mat4)   == ((32 * 16) / 8));    // 4 x 4 x 32 bit float 
             Debug.Assert(Marshal.SizeOf(xyz)    == ((32 * 3) / 8));     // 3 x 32 bit integer
             Debug.Assert(Marshal.SizeOf(tri)    == ((32 * 3) / 8));     // 3 x 32 bit integer
+            Debug.Assert(Marshal.SizeOf(quad)   == ((32 * 3) / 8));     // 3 x 32 bit integer
             Debug.Assert(Marshal.SizeOf(clr)    == ((32 * 4) / 8));     // 4 x 32 bit float
             Debug.Assert(Marshal.SizeOf(oBB2)   == ((32 * 2 * 2) / 8)); // 2 x vec2
             Debug.Assert(Marshal.SizeOf(oBB3)   == ((32 * 3 * 2) / 8)); // 2 x vec3
@@ -231,7 +235,9 @@ namespace PicoGK
             return true;
         }
 
+        public static float fMeshAdaptivity;
         public static uint iMeshCoarseningFactor = 4;
+        public static bool bTriangulateMeshes = false;
 
         public static   float   fVoxelSizeMM = 0.0f;
         public static   string  strLogFolder = "";

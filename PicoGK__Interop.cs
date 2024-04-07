@@ -47,7 +47,7 @@ namespace PicoGK
         public const int nStringLength = 255;
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Library_Init", CharSet = CharSet.Ansi)]
-        private static extern void _Init(float fVoxelSizeMM);
+        private static extern void _Init(float fVoxelSizeMM, bool bTriangulateMeshes, float fMeshAdaptivity);
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Library_GetName", CharSet = CharSet.Ansi)]
         private static extern void _GetName(StringBuilder psz);
@@ -89,13 +89,25 @@ namespace PicoGK
         private static extern int _nAddTriangle(IntPtr hThis,
                                                     in Triangle T);
 
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_nAddQuad")]
+        private static extern int _nAddQuad(IntPtr hThis,
+                                                    in Quad T);
+
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_nTriangleCount")]
         private static extern int _nTriangleCount(IntPtr hThis);
+
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_nQuadCount")]
+        private static extern int _nQuadCount(IntPtr hThis);
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetTriangle")]
         private static extern void _GetTriangle(    IntPtr hThis,
                                                     int nTriangle,
                                                     ref Triangle T);
+
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetQuad")]
+        private static extern void _GetQuad(IntPtr hThis,
+                                                    int nTriangle,
+                                                    ref Quad Q);
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetTriangleV")]
         private static extern void _GetTriangleV(   IntPtr hThis,
@@ -103,6 +115,14 @@ namespace PicoGK
                                                     ref Vector3 vecA,
                                                     ref Vector3 vecB,
                                                     ref Vector3 vecC);
+
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetQuadV")]
+        private static extern void _GetQuadV(       IntPtr hThis,
+                                                    int nTQuad,
+                                                    ref Vector3 vecA,
+                                                    ref Vector3 vecB,
+                                                    ref Vector3 vecC,
+                                                    ref Vector3 vecD);
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetBoundingBox")]
         private static extern void _GetBoundingBox( IntPtr hThis,
