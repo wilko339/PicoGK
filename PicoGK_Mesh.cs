@@ -131,7 +131,12 @@ namespace PicoGK
             return _nAddTriangle(m_hThis, t);
         }
 
-        //// <summary>
+        public int nAddQuad(in Quad q)
+        {
+            return _nAddQuad(m_hThis, q);
+        }
+
+        /// <summary>
         ///  Add a triangle to the mesh with the specified vertex indices
         /// </summary>
         /// <param name="A">First vertex in the triangle</param>
@@ -143,6 +148,11 @@ namespace PicoGK
             return nAddTriangle(new Triangle(A, B, C));
         }
 
+        public int nAddQuad(int A, int B, int C, int D)
+        {
+            return nAddQuad(new Quad(A, B, C, D));
+        }
+
         /// <summary>
         /// Return number of triangles in the mesh
         /// </summary>
@@ -150,6 +160,11 @@ namespace PicoGK
         public int nTriangleCount()
         {
             return _nTriangleCount(m_hThis);
+        }
+
+        public int nQuadCount()
+        {
+            return _nQuadCount(m_hThis);
         }
 
         /// <summary>
@@ -171,6 +186,19 @@ namespace PicoGK
             return nAddTriangle(new Triangle(A, B, C));
         }
 
+        public int nAddQuad(in Vector3 vecA, 
+                            in Vector3 vecB,
+                            in Vector3 vecC,
+                            in Vector3 vecD)
+        {
+            int A = nAddVertex(vecA);
+            int B = nAddVertex(vecB);
+            int C = nAddVertex(vecC);
+            int D = nAddVertex(vecD);
+
+            return nAddQuad(new Quad(A, B, C, D));
+        }
+
         /// <summary>
         /// Get the triangle with the specified index
         /// </summary>
@@ -183,6 +211,13 @@ namespace PicoGK
                             ref t);
 
             return t;
+        }
+
+        public Quad oQuadAt(int nQuad)
+        {
+            Quad quad = new Quad();
+            _GetQuad(m_hThis, nQuad, ref quad);
+            return quad;
         }
 
         /// <summary>
@@ -206,6 +241,16 @@ namespace PicoGK
                             ref vecA,
                             ref vecB,
                             ref vecC);
+        }
+
+        public void GetQuad( int nQuad, out Vector3 vecA, out Vector3 vecB, out Vector3 vecC, out Vector3 vecD)
+        {
+            vecA = new Vector3();
+            vecB = new Vector3();
+            vecC = new Vector3();
+            vecD = new Vector3();
+
+            _GetQuadV(m_hThis, nQuad, ref vecA, ref vecB, ref vecC, ref vecD);
         }
 
         /// <summary>
