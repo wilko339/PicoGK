@@ -74,5 +74,22 @@ namespace PicoGK
             this.C = c;
         }
     }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public partial struct Quad
+    {
+        public int A;
+        public int B;
+        public int C;
+        public int D;
+
+        public Quad ( int a, int b, int c, int d)
+        {
+            this.A = a;
+            this.B = b;
+            this.C = c;
+            this.D = d;
+        }
+    }
 }
 
