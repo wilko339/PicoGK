@@ -69,9 +69,9 @@ namespace PicoGK
                             int b,
                             int c)
         {
-            this.A = a;
-            this.B = b;
-            this.C = c;
+            A = a;
+            B = b;
+            C = c;
         }
     }
 
@@ -85,10 +85,10 @@ namespace PicoGK
 
         public Quad ( int a, int b, int c, int d)
         {
-            this.A = a;
-            this.B = b;
-            this.C = c;
-            this.D = d;
+            A = a;
+            B = b;
+            C = c;
+            D = d;
         }
     }
 }
