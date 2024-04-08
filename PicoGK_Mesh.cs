@@ -41,6 +41,23 @@ namespace PicoGK
 {
     public partial class Mesh
     {
+        
+        public int VertexCount
+        {
+            get
+            {
+                return this.nVertexCount();
+            }
+        }
+
+        public int FaceCount
+        {
+            get
+            {
+                return this.nQuadCount() + this.nVertexCount();
+            }
+        }
+
         /// <summary>
         /// Create an empty Mesh
         /// </summary>
