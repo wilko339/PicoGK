@@ -31,8 +31,8 @@ Generally speaking, your PicoGK projects will look like this:
 - `Program.cs` (your main execution code)
 - ... other files (for example the Visual Studio project file)
    - `/PicoGK` (contains the PicoGK submodule)
-   - `/ShapeKernel` (contains the LEAP71_ShapeKernel submodule)
-   - `/LatticeLibrary` (contains the LEAP71_Lattice submodule)
+   - `/ShapeKernel` (contains the Leap71_ShapeKernel submodule)
+   - `/LatticeLibrary` (contains the Leap71_Lattice submodule)
    - ... other submodules
 
 `Program.cs` contains the code that executes your program. The PicoGK subfolder contains the source code of the PicoGK library. Under the hood PicoGK's C# code calls the PicoGK C++ runtime library for the heavy lifting. As many functions as possible are implemented directly in C# code, to make it simple to understand what is actually going on. Feel free to step into all functions using the debugger.
@@ -85,7 +85,7 @@ Alternatively, If you know how to use Git/GitHub, here are the steps to create a
 
 - [Create a new **C# Console Project**](VisualStudio_CreateConsole.md) and add it to Git
 - **Add PicoGK as submodule** using Git, and initialize it
-- Add [LEAP71_ShapeKernel](https://github.com/leap71/LEAP71_ShapeKernel) and other [modules](https://github.com/leap71?tab=repositories) as needed.
+- Add [Leap71_ShapeKernel](https://github.com/leap71/Leap71_ShapeKernel) and other [modules](https://github.com/leap71?tab=repositories) as needed.
 - In your `Program.cs`, call `Library.Go()` with the appropriate parameters
 
 > [!TIP]
@@ -100,7 +100,7 @@ Check out the other examples from the Examples subdirectory of PicoGK. A fun way
 
 If you look at the code, you will see that it's super simple to create interesting things, even with the basic PicoGK functions.
 
-If you want to seriously dive in, **[you should work using the LEAP 71 Shape Kernel](https://github.com/leap71/LEAP71_ShapeKernel)** and build your [Computational Engineering Models](https://leap71.com/computationalengineering/) on top of it.
+If you want to seriously dive in, **[you should work using the LEAP 71 Shape Kernel](https://github.com/leap71/Leap71_ShapeKernel)** and build your [Computational Engineering Models](https://leap71.com/computationalengineering/) on top of it.
 
 [Check out the main LEAP 71 GitHub page for more modules and links to articles.](https://github.com/leap71)
 

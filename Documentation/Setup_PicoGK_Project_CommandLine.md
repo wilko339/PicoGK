@@ -36,8 +36,8 @@ Change into the newly-created directory (your project's root) and add PicoGK, Sh
 
 ```
 git submodule add https://github.com/leap71/PicoGK PicoGK
-git submodule add https://github.com/leap71/LEAP71_ShapeKernel ShapeKernel
-git submodule add https://github.com/leap71/LEAP71_LatticeLibrary LatticeLibrary
+git submodule add https://github.com/leap71/Leap71_ShapeKernel ShapeKernel
+git submodule add https://github.com/leap71/Leap71_LatticeLibrary LatticeLibrary
 ```
 
 Then initialize the submodules and update them.
@@ -58,8 +58,8 @@ touch README.md
 git init
 git add .
 git submodule add https://github.com/leap71/PicoGK PicoGK
-git submodule add https://github.com/leap71/LEAP71_ShapeKernel ShapeKernel
-git submodule add https://github.com/leap71/LEAP71_LatticeLibrary LatticeLibrary
+git submodule add https://github.com/leap71/Leap71_ShapeKernel ShapeKernel
+git submodule add https://github.com/leap71/Leap71_LatticeLibrary LatticeLibrary
 git submodule init
 git submodule update --init --recursive
 ```

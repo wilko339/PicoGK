@@ -84,7 +84,7 @@ On Windows, make sure all the DLLs from the OpenVDB dependencies are also in the
 
 One last thing — on Mac, you may have to sign the library using the **codesign** tool. Otherwise the library may not load. 
 
-The necessary command line is **codesign -s LEAP71 picogk.*version*.dylib** — you need to have a valid code signing certificate for this (we used one we named LEAP71 — you can self issue this certificate, but it's a few steps).
+The necessary command line is **codesign -s Leap71 picogk.*version*.dylib** — you need to have a valid code signing certificate for this (we used one we named Leap71 — you can self issue this certificate, but it's a few steps).
 
 Here is a relevant Apple article how to create self-signed certificates: https://support.apple.com/en-ae/guide/keychain-access/kyca8916/mac
 
