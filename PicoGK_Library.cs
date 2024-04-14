@@ -34,13 +34,10 @@
 //
 
 using System;
-using System.Threading;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.IO;
-using System.Runtime.CompilerServices;
 
 namespace PicoGK
 {
@@ -223,7 +220,6 @@ namespace PicoGK
                 Mesh        msh     = new Mesh();
                 Voxels      voxM    = new Voxels(msh);
                 Voxels      voxL    = new Voxels(lat);
-                PolyLine    oPoly   = new PolyLine("FF0000");
             }
 
             catch (Exception e)
