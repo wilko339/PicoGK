@@ -266,6 +266,10 @@ namespace PicoGK
                                                     IntPtr hOther,
                                                     float fSmoothDistance);
 
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_Transform")]
+        private static extern void _Transform(  IntPtr hThis,
+                                                Matrix4x4 mTransform);
+
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_Offset")]
         private static extern void _Offset( IntPtr hThis,
                                             float fOffset);
@@ -290,6 +294,12 @@ namespace PicoGK
         private static extern void _RenderImplicit( IntPtr hThis,
                                                     in BBox3 oBounds,
                                                     CallbackImplicitDistance Callback);
+
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_RenderImplicitMasked")]
+        private static extern void _RenderImplicitMasked(IntPtr hThis,
+                                                    in BBox3 oBounds,
+                                                    CallbackImplicitDistance Callback,
+                                                    IntPtr hMask);
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_IntersectImplicit")]
         private static extern void _IntersectImplicit(  IntPtr hThis,

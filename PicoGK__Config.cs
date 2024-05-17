@@ -39,7 +39,7 @@ namespace PicoGK
     {
         // PicoGK Runtime to load
 
-        public const string strPicoGKLib = "picogkgh.1.3.dll"; // dll or dylib
+        public const string strPicoGKLib = "picogkgh.1.3d.dll"; // dll or dylib
         
     }
 }

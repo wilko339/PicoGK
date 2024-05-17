@@ -98,6 +98,11 @@ namespace PicoGK
             RenderImplicit(xImplicit, oBounds);
         }
 
+        public Voxels( in IImplicit xImplicit, in BBox3 oBounds, in Voxels mask) : this()
+        {
+            RenderImplicitMasked(xImplicit, oBounds, mask);
+        }
+        
         /// <summary>
         /// Creates a new voxel field from a mesh
         /// </summary>
@@ -150,6 +155,9 @@ namespace PicoGK
         /// <param name="voxOperand">Voxels masking our voxel field</param>
         public void BoolIntersect(in Voxels voxOperand)
             => _BoolIntersect(m_hThis, voxOperand.m_hThis);
+
+        public void Transform(Matrix4x4 transform)
+            => _Transform(m_hThis, transform);
 
         /// <summary>
         /// Offsets the voxel field by the specified distance.
@@ -206,6 +214,9 @@ namespace PicoGK
         public void RenderImplicit( in IImplicit xImp,
                                     in BBox3 oBounds)
             => _RenderImplicit(m_hThis, in oBounds, xImp.fSignedDistance);
+
+        public void RenderImplicitMasked(in IImplicit xImp, in BBox3 oBounds, in Voxels mask)
+            => _RenderImplicitMasked(m_hThis, in oBounds, xImp.fSignedDistance, mask.m_hThis);
 
         /// <summary>
         /// Render an implicit signed distance function into the voxels
