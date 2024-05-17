@@ -1,0 +1,209 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5979F4D8-485F-4EC1-B1A2-202C08AD5900}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ClassLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>PicoGK</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include=".git\config" />
+    <None Include=".git\description" />
+    <None Include=".git\HEAD" />
+    <None Include=".git\hooks\applypatch-msg.sample" />
+    <None Include=".git\hooks\commit-msg.sample" />
+    <None Include=".git\hooks\fsmonitor-watchman.sample" />
+    <None Include=".git\hooks\post-update.sample" />
+    <None Include=".git\hooks\pre-applypatch.sample" />
+    <None Include=".git\hooks\pre-commit.sample" />
+    <None Include=".git\hooks\pre-merge-commit.sample" />
+    <None Include=".git\hooks\pre-push.sample" />
+    <None Include=".git\hooks\pre-rebase.sample" />
+    <None Include=".git\hooks\pre-receive.sample" />
+    <None Include=".git\hooks\prepare-commit-msg.sample" />
+    <None Include=".git\hooks\push-to-checkout.sample" />
+    <None Include=".git\hooks\sendemail-validate.sample" />
+    <None Include=".git\hooks\update.sample" />
+    <None Include=".git\index" />
+    <None Include=".git\info\exclude" />
+    <None Include=".git\logs\HEAD" />
+    <None Include=".git\logs\refs\heads\main" />
+    <None Include=".git\logs\refs\remotes\origin\HEAD" />
+    <None Include=".git\objects\pack\pack-43d47258aa44246869f516cf5676b39c9d83992f.idx" />
+    <None Include=".git\objects\pack\pack-43d47258aa44246869f516cf5676b39c9d83992f.pack" />
+    <None Include=".git\objects\pack\pack-43d47258aa44246869f516cf5676b39c9d83992f.rev" />
+    <None Include=".git\packed-refs" />
+    <None Include=".git\refs\heads\main" />
+    <None Include=".git\refs\remotes\origin\HEAD" />
+    <None Include=".vs\PicoGK\FileContentIndex\66638069-15b7-4d29-a4e2-7ea84e9a01e6.vsidx" />
+    <None Include=".vs\PicoGK\v17\.wsuo" />
+    <None Include=".vs\PicoGK\v17\DocumentLayout.json" />
+    <None Include=".vs\ProjectSettings.json" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="Documentation\Compiling_PicoGKRuntime.md" />
+    <None Include="Documentation\Install_Mac.md" />
+    <None Include="Documentation\Install_Windows.md" />
+    <None Include="Documentation\README.md" />
+    <None Include="Documentation\Setup_PicoGK_Project_CommandLine.md" />
+    <None Include="Documentation\VisualStudioCode_FirstTime.md" />
+    <None Include="Documentation\VisualStudio_CreateConsole.md" />
+    <None Include="Documentation\VisualStudio_FirstTime.md" />
+    <None Include="Documentation\WhatIsInstalled.md" />
+    <None Include="Examples\Testfiles\Teapot.stl" />
+    <None Include="README.md" />
+    <None Include="ViewerEnvironment\Barcelona.zip" />
+    <None Include="ViewerEnvironment\DarkStudio.zip" />
+    <None Include="ViewerEnvironment\PicoGKDefaultEnv.zip" />
+    <None Include="ViewerEnvironment\SkyBlue.zip" />
+    <None Include="ViewerEnvironment\SkyNeutral.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Examples\Ex_BooleanShowCase.cs" />
+    <Compile Include="Examples\Ex_BooleanTwoMeshCubes.cs" />
+    <Compile Include="Examples\Ex_ImplicitsExample.cs" />
+    <Compile Include="Examples\Ex_ImplicitSphere.cs" />
+    <Compile Include="Examples\Ex_LoadDisplaySaveSTL.cs" />
+    <Compile Include="Examples\Ex_RayCasting.cs" />
+    <Compile Include="Examples\Ex_SimpleLatticeAndSliceExtract.cs" />
+    <Compile Include="Examples\Ex_SmoothenObject.cs" />
+    <Compile Include="Examples\Ex_TimelapseAnimation.cs" />
+    <Compile Include="Examples\Ex_VdbIo.cs" />
+    <Compile Include="PicoGK_Animation.cs" />
+    <Compile Include="PicoGK_BBox.cs" />
+    <Compile Include="PicoGK_Cli.cs" />
+    <Compile Include="PicoGK_Color.cs" />
+    <Compile Include="PicoGK_Csv.cs" />
+    <Compile Include="PicoGK_Easing.cs" />
+    <Compile Include="PicoGK_Image.cs" />
+    <Compile Include="PicoGK_ImageIo.cs" />
+    <Compile Include="PicoGK_Lattice.cs" />
+    <Compile Include="PicoGK_Library.cs" />
+    <Compile Include="PicoGK_Log.cs" />
+    <Compile Include="PicoGK_Mesh.cs" />
+    <Compile Include="PicoGK_MeshIo.cs" />
+    <Compile Include="PicoGK_MeshMath.cs" />
+    <Compile Include="PicoGK_OpenVdbFile.cs" />
+    <Compile Include="PicoGK_PolyLine.cs" />
+    <Compile Include="PicoGK_Slice.cs" />
+    <Compile Include="PicoGK_Types.cs" />
+    <Compile Include="PicoGK_Utils.cs" />
+    <Compile Include="PicoGK_Viewer.cs" />
+    <Compile Include="PicoGK_ViewerActions.cs" />
+    <Compile Include="PicoGK_ViewerAnimation.cs" />
+    <Compile Include="PicoGK_ViewerKeyboard.cs" />
+    <Compile Include="PicoGK_ViewerTimelapse.cs" />
+    <Compile Include="PicoGK_Voxels.cs" />
+    <Compile Include="PicoGK_VoxelsIo.cs" />
+    <Compile Include="PicoGK__Config.cs" />
+    <Compile Include="PicoGK__Interop.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Documentation\images\9CF66413-8BA1-4E18-9BA7-F5254235B44A.jpeg" />
+    <Content Include="Documentation\images\AddLibZma.png" />
+    <Content Include="Documentation\images\image-20231014161615187.png" />
+    <Content Include="Documentation\images\image-20231014182542392.png" />
+    <Content Include="Documentation\images\image-20231014183009658.png" />
+    <Content Include="Documentation\images\image-20231014183143914.png" />
+    <Content Include="Documentation\images\image-20231014183312778.png" />
+    <Content Include="Documentation\images\image-20231014184436833.png" />
+    <Content Include="Documentation\images\image-20231014184822502.png" />
+    <Content Include="Documentation\images\image-20231014184919894.png" />
+    <Content Include="Documentation\images\image-20231014185209784.png" />
+    <Content Include="Documentation\images\image-20231017134154856.png" />
+    <Content Include="Documentation\images\image-20231017180157568.png" />
+    <Content Include="Documentation\images\image-20231017180729775.png" />
+    <Content Include="Documentation\images\image-20231125165618361.png" />
+    <Content Include="Documentation\images\image-20231125170514595.png" />
+    <Content Include="Documentation\images\image-20231125171044858.png" />
+    <Content Include="Documentation\images\image-20231125184538276.png" />
+    <Content Include="Documentation\images\image-20231125201341187.png" />
+    <Content Include="Documentation\images\image-20231125201458029.png" />
+    <Content Include="Documentation\images\MacInstaller1.png" />
+    <Content Include="Documentation\images\MacInstaller2.png" />
+    <Content Include="Documentation\images\MacInstallerWarning.png" />
+    <Content Include="Documentation\images\MacOSPicoGKExample.png" />
+    <Content Include="Documentation\images\MacSecuritySettings.png" />
+    <Content Include="Documentation\images\Mac_OpenInstaller.png" />
+    <Content Include="Documentation\images\PicoGK.jpg" />
+    <Content Include="Documentation\images\PicoGKDMG.png" />
+    <Content Include="Documentation\images\PicoGKSetupLicensing.png" />
+    <Content Include="Documentation\images\PicoGKSetupWhere.png" />
+    <Content Include="Documentation\images\PicoGKSketched.jpg" />
+    <Content Include="Documentation\images\VisualStudio2022Download.png" />
+    <Content Include="Documentation\images\VisualStudio2022GettingInstallerReady.png" />
+    <Content Include="Documentation\images\VisualStudio2022Launch.png" />
+    <Content Include="Documentation\images\VisualStudio2022OpenVCPRJ.png" />
+    <Content Include="Documentation\images\VisualStudio2022Options.png" />
+    <Content Include="Documentation\images\VisualStudio2022Welcome.png" />
+    <Content Include="Documentation\images\VisualStudioCode.png" />
+    <Content Include="Documentation\images\VisualStudioCodeApp.png" />
+    <Content Include="Documentation\images\VisualStudioCodeCommandPalette.png" />
+    <Content Include="Documentation\images\VisualStudioCodeConsoleApp.png" />
+    <Content Include="Documentation\images\VisualStudioCodeConsoleOutput.png" />
+    <Content Include="Documentation\images\VisualStudioCodeDevKit.png" />
+    <Content Include="Documentation\images\VisualStudioCodeDownloaded.png" />
+    <Content Include="Documentation\images\VisualStudioCodeFirstProject.png" />
+    <Content Include="Documentation\images\VisualStudioCodeMain.png" />
+    <Content Include="Documentation\images\VisualStudioCodeOpenFolder.png" />
+    <Content Include="Documentation\images\VisualStudioCodePicoGK.png" />
+    <Content Include="Documentation\images\VisualStudioCodeProjectName.png" />
+    <Content Include="Documentation\images\VisualStudioCodeRunAndDebug.png" />
+    <Content Include="Documentation\images\VisualStudioCodeSecurity.png" />
+    <Content Include="Documentation\images\VisualStudioCodeSelectDebugger.png" />
+    <Content Include="Documentation\images\VisualStudioNewConsole1.png" />
+    <Content Include="Documentation\images\VisualStudioNewConsole2.png" />
+    <Content Include="Documentation\images\VisualStudioNewConsole3.png" />
+    <Content Include="Documentation\images\VisualStudioNewConsole4.png" />
+    <Content Include="Documentation\images\VisualStudioProgramCS.png" />
+    <Content Include="Documentation\images\VisualStudioRun.png" />
+    <Content Include="Documentation\images\VisualStudioSuccess.png" />
+    <Content Include="Documentation\images\WarningDependentLibrary.png" />
+    <Content Include="Documentation\images\WarningDependentLibrary2.png" />
+    <Content Include="Documentation\images\WinPicoGKComplete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".git\objects\info\" />
+    <Folder Include=".git\refs\tags\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
