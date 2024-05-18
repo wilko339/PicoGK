@@ -284,46 +284,6 @@ namespace PicoGK
             }
         }
 
-        public void AddToViewer(    Viewer oViewer,
-                                    ColorFloat? clrOutside      = null,
-                                    ColorFloat? clrInside       = null,
-                                    ColorFloat? clrDegenerate   = null,
-                                    int nGroup = 0)
-        {
-            if (clrDegenerate is null)
-                clrDegenerate   = "#AAAAAAAA";
-
-            if (clrInside is null)
-                clrInside       = "#AAAAAAAA";
-
-            if (clrOutside is null)
-                clrOutside      = "#FF0000AA";
-
-            foreach (PolySlice oSlice in m_oSlices)
-            {  
-                for (int n = 0; n < oSlice.nCountours(); n++)
-                {
-                    PolyContour oContour = oSlice.oCountourAt(n);
-
-                    ColorFloat? clr = clrDegenerate;
-
-                    if (oContour.eWinding() == PolyContour.EWinding.CLOCKWISE)
-                        clr = clrInside;
-                    else if (oContour.eWinding() == PolyContour.EWinding.COUNTERCLOCKWISE)
-                        clr = clrOutside;
-
-                    PolyLine oPolyLine = new PolyLine((ColorFloat)clr);
-
-                    foreach (Vector2 vec in oContour.oVertices())
-                    {
-                        oPolyLine.nAddVertex(new Vector3(vec.X, vec.Y, oSlice.fZPos()));
-                    }
-
-                    oViewer.Add(oPolyLine, nGroup);
-                }
-            }
-        }
-
         public int nCount() => m_oSlices.Count;
         public PolySlice oSliceAt(int n) => m_oSlices[n];
         public BBox3 oBBox() => m_oBBox;

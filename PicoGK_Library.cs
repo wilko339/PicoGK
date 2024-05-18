@@ -39,8 +39,6 @@ using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.IO;
-using System.Runtime.CompilerServices;
 
 namespace PicoGK
 {

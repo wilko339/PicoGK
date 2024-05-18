@@ -5,7 +5,7 @@
     <ProjectGuid>{5979F4D8-485F-4EC1-B1A2-202C08AD5900}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>ClassLibrary</AssemblyName>
+    <AssemblyName>PicoGK</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -33,11 +33,15 @@
     <RootNamespace>PicoGK</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathFloat, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Labrador\packages\MathFloat.1.0.1.0\lib\net20\MathFloat.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -86,33 +90,14 @@
     <None Include="Documentation\VisualStudio_CreateConsole.md" />
     <None Include="Documentation\VisualStudio_FirstTime.md" />
     <None Include="Documentation\WhatIsInstalled.md" />
-    <None Include="Examples\Testfiles\Teapot.stl" />
+    <None Include="packages.config" />
     <None Include="README.md" />
-    <None Include="ViewerEnvironment\Barcelona.zip" />
-    <None Include="ViewerEnvironment\DarkStudio.zip" />
-    <None Include="ViewerEnvironment\PicoGKDefaultEnv.zip" />
-    <None Include="ViewerEnvironment\SkyBlue.zip" />
-    <None Include="ViewerEnvironment\SkyNeutral.zip" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Examples\Ex_BooleanShowCase.cs" />
-    <Compile Include="Examples\Ex_BooleanTwoMeshCubes.cs" />
-    <Compile Include="Examples\Ex_ImplicitsExample.cs" />
-    <Compile Include="Examples\Ex_ImplicitSphere.cs" />
-    <Compile Include="Examples\Ex_LoadDisplaySaveSTL.cs" />
-    <Compile Include="Examples\Ex_RayCasting.cs" />
-    <Compile Include="Examples\Ex_SimpleLatticeAndSliceExtract.cs" />
-    <Compile Include="Examples\Ex_SmoothenObject.cs" />
-    <Compile Include="Examples\Ex_TimelapseAnimation.cs" />
-    <Compile Include="Examples\Ex_VdbIo.cs" />
     <Compile Include="PicoGK_Animation.cs" />
     <Compile Include="PicoGK_BBox.cs" />
-    <Compile Include="PicoGK_Cli.cs" />
     <Compile Include="PicoGK_Color.cs" />
-    <Compile Include="PicoGK_Csv.cs" />
     <Compile Include="PicoGK_Easing.cs" />
-    <Compile Include="PicoGK_Image.cs" />
-    <Compile Include="PicoGK_ImageIo.cs" />
     <Compile Include="PicoGK_Lattice.cs" />
     <Compile Include="PicoGK_Library.cs" />
     <Compile Include="PicoGK_Log.cs" />
@@ -124,11 +109,6 @@
     <Compile Include="PicoGK_Slice.cs" />
     <Compile Include="PicoGK_Types.cs" />
     <Compile Include="PicoGK_Utils.cs" />
-    <Compile Include="PicoGK_Viewer.cs" />
-    <Compile Include="PicoGK_ViewerActions.cs" />
-    <Compile Include="PicoGK_ViewerAnimation.cs" />
-    <Compile Include="PicoGK_ViewerKeyboard.cs" />
-    <Compile Include="PicoGK_ViewerTimelapse.cs" />
     <Compile Include="PicoGK_Voxels.cs" />
     <Compile Include="PicoGK_VoxelsIo.cs" />
     <Compile Include="PicoGK__Config.cs" />
