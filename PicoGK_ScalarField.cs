@@ -33,6 +33,7 @@
 // limitations under the License.   
 //
 
+using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -41,8 +42,8 @@ namespace PicoGK
 {
     public interface ITraverseScalarField
     {
-        public abstract void InformActiveValue( in Vector3  vecPosition,
-                                                float       fValue);
+        void InformActiveValue( in Vector3  vecPosition,
+                                    float       fValue);
     }
 
     public partial class ScalarField : IImplicit
@@ -57,7 +58,7 @@ namespace PicoGK
             Debug.Assert(m_hThis != IntPtr.Zero);
             Debug.Assert(_bIsValid(m_hThis));
 
-            m_oMetadata = new(FieldMetadata._hFromScalarField(m_hThis));
+            m_oMetadata = new FieldMetadata(FieldMetadata._hFromScalarField(m_hThis));
             m_oMetadata._SetValue("PicoGK.Class", "ScalarField");
         }
 
@@ -253,7 +254,7 @@ namespace PicoGK
                                 out int nYSize,
                                 out int nZSize);
 
-            return new( Library.vecVoxelsToMm(iXOrigin, iYOrigin, iZOrigin),
+            return new BBox3( Library.vecVoxelsToMm(iXOrigin, iYOrigin, iZOrigin),
                         Library.vecVoxelsToMm(  iXOrigin + nXSize,
                                                 iYOrigin + nYSize,
                                                 iZOrigin + nZSize));

@@ -33,6 +33,7 @@
 // limitations under the License.   
 //
 
+using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -41,8 +42,8 @@ namespace PicoGK
 {
     public interface ITraverseVectorField
     {
-        public abstract void InformActiveValue( in Vector3 vecPosition,
-                                                in Vector3 vecValue);
+        void InformActiveValue( in Vector3 vecPosition,
+                                  in Vector3 vecValue);
     }
 
     public partial class VectorField
@@ -57,7 +58,7 @@ namespace PicoGK
             Debug.Assert(m_hThis != IntPtr.Zero);
             Debug.Assert(_bIsValid(m_hThis));
 
-            m_oMetadata = new(FieldMetadata._hFromVectorField(m_hThis));
+            m_oMetadata = new FieldMetadata(FieldMetadata._hFromVectorField(m_hThis));
             m_oMetadata._SetValue("PicoGK.Class", "VectorField");
         }
 

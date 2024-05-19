@@ -33,6 +33,7 @@
 // limitations under the License.   
 //
 
+using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -46,7 +47,7 @@ namespace PicoGK
         public const int nStringLength = 255;
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Library_Init", CharSet = CharSet.Ansi)]
-        private static extern void _Init(float fVoxelSizeMM);
+        private static extern void _InitLibrary(float fVoxelSizeMM, float fMeshAdaptivity);
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Library_GetName", CharSet = CharSet.Ansi)]
         private static extern void _GetName(StringBuilder psz);
@@ -96,20 +97,40 @@ namespace PicoGK
         private static extern int _nAddTriangle(IntPtr hThis,
                                                     in Triangle T);
 
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_nAddQuad")]
+        private static extern int _nAddQuad(IntPtr hThis,
+                                                    in Quad T);
+
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_nTriangleCount")]
         private static extern int _nTriangleCount(IntPtr hThis);
 
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_nQuadCount")]
+        private static extern int _nQuadCount(IntPtr hThis);
+
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetTriangle")]
-        private static extern void _GetTriangle(    IntPtr hThis,
+        private static extern void _GetTriangle(IntPtr hThis,
                                                     int nTriangle,
                                                     ref Triangle T);
 
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetQuad")]
+        private static extern void _GetQuad(IntPtr hThis,
+                                                    int nTriangle,
+                                                    ref Quad Q);
+
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetTriangleV")]
-        private static extern void _GetTriangleV(   IntPtr hThis,
+        private static extern void _GetTriangleV(IntPtr hThis,
                                                     int nTriangle,
                                                     ref Vector3 vecA,
                                                     ref Vector3 vecB,
                                                     ref Vector3 vecC);
+
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetQuadV")]
+        private static extern void _GetQuadV(IntPtr hThis,
+                                                    int nTQuad,
+                                                    ref Vector3 vecA,
+                                                    ref Vector3 vecB,
+                                                    ref Vector3 vecC,
+                                                    ref Vector3 vecD);
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetBoundingBox")]
         private static extern void _GetBoundingBox( IntPtr hThis,
@@ -242,6 +263,9 @@ namespace PicoGK
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_Destroy")]
         private static extern void _Destroy(IntPtr hThis);
 
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_Transform")]
+        private static extern void _Transform(IntPtr hThis, Matrix4x4 transform);
+
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_BoolAdd")]
         private static extern void _BoolAdd(    IntPtr hThis,
                                                 IntPtr hOther);
@@ -318,6 +342,10 @@ namespace PicoGK
         private static extern bool _bIsEqual(   IntPtr hThis,
                                                 IntPtr hOther);
 
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_GetBoundingBox")]
+        private extern static void _GetBoundingBox(IntPtr hThis,
+                                                    ref BBox3 oBBox);
+
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_CalculateProperties")]
         private extern static void _CalculateProperties(    IntPtr hThis,
                                                             ref float pfVolume,
@@ -350,7 +378,7 @@ namespace PicoGK
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_GetSlice")]
         private extern static void _GetVoxelSlice(  IntPtr hThis,
-                                                    int nZSlice,
+                                                    float nZSlice,
                                                     IntPtr afBuffer,
                                                     ref float fBackgroundValue);
 

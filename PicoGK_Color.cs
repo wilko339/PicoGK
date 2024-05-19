@@ -33,6 +33,8 @@
 // limitations under the License.   
 //
 
+using MathFloat;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -214,13 +216,13 @@ namespace PicoGK
         /// Return a random color
         /// </summary>
         /// <returns>Random color</returns>
-        public static ColorFloat clrRandom(Random? oRand = null)
+        public static ColorFloat clrRandom(Random oRand = null)
         {
             Random oRandom = oRand ?? new Random();
 
-            return new ColorFloat(  oRandom.NextSingle(),
-                                    oRandom.NextSingle(),
-                                    oRandom.NextSingle());
+            return new ColorFloat(  (float)oRandom.NextDouble(),
+                                    (float)oRandom.NextDouble(),
+                                    (float)oRandom.NextDouble());
         }
     }
 
@@ -384,9 +386,9 @@ namespace PicoGK
         {
             // make sure we are in valid range for HSV conversion
             // No HDR values
-            clr.R = float.Clamp(clr.R, 0, 1);
-            clr.G = float.Clamp(clr.G, 0, 1);
-            clr.B = float.Clamp(clr.B, 0, 1);
+            clr.R = MathF.Max(MathF.Min(clr.R, 0), 1);
+            clr.G = MathF.Max(MathF.Min(clr.G, 0), 1);
+            clr.B = MathF.Max(MathF.Min(clr.B, 0), 1);
 
             float min = Math.Min(Math.Min(clr.R, clr.G), clr.B);
             float max = Math.Max(Math.Max(clr.R, clr.G), clr.B);
@@ -495,12 +497,12 @@ namespace PicoGK
         {
             // make sure we are in valid range for HSV conversion
             // No HDR values
-            clr.R = float.Clamp(clr.R, 0, 1);
-            clr.G = float.Clamp(clr.G, 0, 1);
-            clr.B = float.Clamp(clr.B, 0, 1);
+            clr.R = MathF.Max(MathF.Min(clr.R, 0), 1);
+            clr.G = MathF.Max(MathF.Min(clr.G, 0), 1);
+            clr.B = MathF.Max(MathF.Min(clr.B, 0), 1);
 
-            float min = float.Min(float.Min(clr.R, clr.G), clr.B);
-            float max = float.Max(float.Max(clr.R, clr.G), clr.B);
+            float min = MathF.Min(MathF.Min(clr.R, clr.G), clr.B);
+            float max = MathF.Max(MathF.Max(clr.R, clr.G), clr.B);
             float delta = max - min;
 
             // Lightness calculation
@@ -529,6 +531,10 @@ namespace PicoGK
                 else if (clr.B == max)
                 {
                     H = 4 + (clr.R - clr.G) / delta; // Between magenta & cyan
+                }
+                else
+                {
+                    H = 0;
                 }
 
                 H *= 60; // Convert to degrees

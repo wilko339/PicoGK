@@ -33,6 +33,7 @@
 // limitations under the License.   
 //
 
+using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -54,7 +55,7 @@ namespace PicoGK
         /// Negative values indicate the inside of the object
         /// Positive values indicate the outside of the object
         /// </returns>
-        public abstract float fSignedDistance(in Vector3 vec);
+        float fSignedDistance(in Vector3 vec);
     }
 
     public partial class Voxels
@@ -69,7 +70,7 @@ namespace PicoGK
             Debug.Assert(m_hThis != IntPtr.Zero);
             Debug.Assert(_bIsValid(m_hThis));
 
-            m_oMetadata = new(FieldMetadata._hFromVoxels(m_hThis));
+            m_oMetadata = new FieldMetadata(FieldMetadata._hFromVoxels(m_hThis));
             m_oMetadata._SetValue("PicoGK.Class", "Voxels");
         }
 
@@ -136,6 +137,9 @@ namespace PicoGK
         {
             return new Mesh(this);
         }
+
+        public void Transform(Matrix4x4 transform)
+            => _Transform(m_hThis, transform);
 
         /// <summary>
         /// Performs a boolean union between two voxel fields
@@ -286,6 +290,12 @@ namespace PicoGK
         public bool bIsEqual(in Voxels voxOther)
             => _bIsEqual(m_hThis, voxOther.m_hThis);
 
+        public void GetBoundingBox(out BBox3 oBBox)
+        {
+            oBBox = new BBox3();
+            _GetBoundingBox(m_hThis, ref oBBox);
+        }
+
         /// <summary>
         /// This function evaluates the entire voxel field and returns
         /// the volume of all voxels in cubic millimeters and the Bounding Box
@@ -298,7 +308,7 @@ namespace PicoGK
         public void CalculateProperties(    out float fVolumeCubicMM,
                                             out BBox3 oBBox)
         {
-            oBBox           = new();
+            oBBox           = new BBox3();
             fVolumeCubicMM  = 0f;
 
            _CalculateProperties(    m_hThis,
@@ -332,7 +342,7 @@ namespace PicoGK
         public bool bClosestPointOnSurface( in  Vector3 vecSearch,
                                             out Vector3 vecSurfacePoint)
         {
-            vecSurfacePoint     = new();
+            vecSurfacePoint     = new Vector3();
             return _bClosestPointOnSurface( m_hThis,
                                             in  vecSearch,
                                             ref vecSurfacePoint);
@@ -350,7 +360,7 @@ namespace PicoGK
                                         in  Vector3 vecDirection,
                                         out Vector3 vecSurfacePoint)
         {
-            vecSurfacePoint     = new();
+            vecSurfacePoint     = new Vector3();
             return _bRayCastToSurface( m_hThis,
                                        in  vecSearch,
                                        in  vecDirection,
@@ -433,7 +443,7 @@ namespace PicoGK
         /// </summary>
         /// <param name="nZSlice">Slice to retrieve. 0 is at the bottom.</param>
         /// <param name="img">Pre-allocated grayscale image to receive the values</param>
-        public void GetVoxelSlice(  in int nZSlice,
+        public void GetVoxelSlice(  in float fZSlice,
                                     ref ImageGrayScale img,
                                     ESliceMode eMode = ESliceMode.SignedDistance)
         {
@@ -442,7 +452,7 @@ namespace PicoGK
             try
             {
                 IntPtr afBufferPtr = oPinnedArray.AddrOfPinnedObject();
-                _GetVoxelSlice(m_hThis, nZSlice, afBufferPtr, ref fBackground);
+                _GetVoxelSlice(m_hThis, fZSlice, afBufferPtr, ref fBackground);
             }
             finally
             {

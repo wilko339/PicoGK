@@ -33,6 +33,7 @@
 // limitations under the License.   
 //
 
+using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Text;
@@ -235,7 +236,7 @@ namespace PicoGK
         /// Converts the contents of the metadata table to a string
         /// </summary>
         /// <returns>String containing info about metadata</returns>
-        public override string? ToString()
+        public override string ToString()
         {
             string str = $"Metadata table with {nCount()} items\n";
             for (int nMeta=0; nMeta < nCount(); nMeta++)
