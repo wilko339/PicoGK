@@ -112,7 +112,7 @@ namespace PicoGK
         }
 
         /// <summary>
-        /// Creates a new voxel field form a mesh
+        /// Creates a new voxel field from a mesh
         /// </summary>
         /// <param name="msh">The mesh that is rendered into the voxels</param>
         public Voxels(in Mesh msh) : this()
@@ -445,6 +445,7 @@ namespace PicoGK
         /// <param name="img">Pre-allocated grayscale image to receive the values</param>
         public void GetVoxelSlice(  in float fZSlice,
                                     ref ImageGrayScale img,
+                                    int resolution,
                                     ESliceMode eMode = ESliceMode.SignedDistance)
         {
             float fBackground = 0f;
@@ -452,7 +453,7 @@ namespace PicoGK
             try
             {
                 IntPtr afBufferPtr = oPinnedArray.AddrOfPinnedObject();
-                _GetVoxelSlice(m_hThis, fZSlice, afBufferPtr, ref fBackground);
+                _GetVoxelSlice(m_hThis, fZSlice, resolution, afBufferPtr, ref fBackground);
             }
             finally
             {

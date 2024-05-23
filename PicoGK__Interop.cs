@@ -379,6 +379,7 @@ namespace PicoGK
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_GetSlice")]
         private extern static void _GetVoxelSlice(  IntPtr hThis,
                                                     float nZSlice,
+                                                    int resolution,
                                                     IntPtr afBuffer,
                                                     ref float fBackgroundValue);
 

@@ -42,11 +42,10 @@ namespace PicoGK
 {
     public partial class Library
     {
-        public static void InitLibrary(float voxelSize, float meshAdaptivity, bool triangulateMeshes)
+        public static void InitLibrary(float voxelSize, float meshAdaptivity)
         {
             fVoxelSizeMM = voxelSize;
             fMeshAdaptivity = meshAdaptivity;
-            bTriangulateMeshes = triangulateMeshes;
 
             _InitLibrary(voxelSize,  meshAdaptivity);
         }
