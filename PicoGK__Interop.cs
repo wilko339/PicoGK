@@ -287,6 +287,10 @@ namespace PicoGK
         private static extern void _Offset( IntPtr hThis,
                                             float fOffset);
 
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_OffsetField")]
+        private static extern void _OffsetField(IntPtr hThis,
+                                                IntPtr fOffset);
+
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_DoubleOffset")]
         private static extern void _DoubleOffset(   IntPtr hThis,
                                                     float fOffset1,
@@ -788,6 +792,13 @@ namespace PicoGK
                                                 in Vector3 vecPosition,
                                                 float fValue);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate float CallbackScalarFunction(in Vector3 vec);
+
+        [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ScalarField_EvaluateFunction")]
+        private static extern void _EvaluateFunction(   IntPtr hThis, in BBox3 oBounds,
+                                                        CallbackScalarFunction func);
+
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ScalarField_bGetValue")]
         private static extern bool _bGetValue(   IntPtr hThis,
                                                  in  Vector3 vecPosition,
@@ -808,7 +819,8 @@ namespace PicoGK
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ScalarField_GetSlice")]
         private extern static void _GetVoxelSlice(  IntPtr hThis,
-                                                    int nZSlice,
+                                                    float fZSlice,
+                                                    int resolution,
                                                     IntPtr afBuffer);
 
         [DllImport(Config.strPicoGKLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ScalarField_TraverseActive")]
