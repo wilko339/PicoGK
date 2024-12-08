@@ -102,13 +102,24 @@ namespace PicoGK
 
         /// <summary>
         /// Creates a new voxel field and renders it using the
-        /// implicit function specified
+        /// implicit function specified within a box region
         /// </summary>
         /// <param name="oImplicit">Object producing a signed distance field</param>
         public Voxels(  in IImplicit xImplicit,
                         in BBox3 oBounds) : this()
         {
             RenderImplicit(xImplicit, oBounds);
+        }
+
+        /// <summary>
+        /// Creates a new voxel field and renders it using the
+        /// implicit function specified within a voxel region
+        /// </summary>
+        /// <param name="oImplicit">Object producing a signed distance field</param>
+        public Voxels(  in IImplicit xImplicit,
+                        in Voxels voxRegion) : this(voxRegion)
+        {
+            IntersectImplicit(xImplicit);
         }
 
         /// <summary>
@@ -175,6 +186,13 @@ namespace PicoGK
         /// <param name="fDistMM">The distance to move the surface outward (positive) or inward (negative) in millimeters</param>
         public void Offset(float fDistMM)
             => _Offset(m_hThis, fDistMM);
+
+        /// <summary>
+        /// Offsets the voxel field using a scalar field. 
+        /// </summary>
+        /// <param name="scalarField">The scalar field determining the offset distance in mm.</param>
+        public void Offset(in ScalarField scalarField)
+            => _OffsetField(m_hThis, scalarField.m_hThis);
 
         /// <summary>
         /// Offsets the voxel field twice, but the specified distances
