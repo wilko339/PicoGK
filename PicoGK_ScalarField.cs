@@ -88,6 +88,11 @@ namespace PicoGK
             : this(_hCreateFromVoxels(oVoxels.m_hThis))
         { }
 
+        public ScalarField( in IImplicit xFunction, in BBox3 oBounds) : this()
+        {
+            EvaluateFunction(xFunction, oBounds);
+        }
+
         /// <summary>
         /// Sets the value at the specified position in mm
         /// When you set a value, the position gets "activated"
@@ -100,6 +105,11 @@ namespace PicoGK
                                 float   fValue)
         {
             _SetValue(m_hThis, vecPosition, fValue);
+        }
+
+        public void EvaluateFunction( in IImplicit xFunc, in BBox3 oBounds)
+        {
+             _EvaluateFunction(m_hThis, in oBounds, xFunc.fSignedDistance);
         }
 
         /// <summary>
@@ -198,14 +208,15 @@ namespace PicoGK
         /// </summary>
         /// <param name="nZSlice">Slice to retrieve. 0 is at the bottom.</param>
         /// <param name="img">Pre-allocated grayscale image to receive the values</param>
-        public void GetVoxelSlice(  in int nZSlice,
+        public void GetVoxelSlice(  in float fZSlice,
+                                    int resolution,
                                     ref ImageGrayScale img)
         {
             GCHandle oPinnedArray = GCHandle.Alloc(img.m_afValues, GCHandleType.Pinned);
             try
             {
                 IntPtr afBufferPtr = oPinnedArray.AddrOfPinnedObject();
-                _GetVoxelSlice(m_hThis, nZSlice, afBufferPtr);
+                _GetVoxelSlice(m_hThis, fZSlice, resolution, afBufferPtr);
             }
             finally
             {
